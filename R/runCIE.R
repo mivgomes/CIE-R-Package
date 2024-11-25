@@ -276,7 +276,7 @@ runEnrichment <- function(ents, rels, DGEtable, verbose, hypTabs, method,
     }
     else {
         enrichment <- generateHypTabs2(ents,rels, DGEtable, verbose=verbose,
-                                       method=method, numCores=numCores)
+                                       method=method)
         index <- grep("pval|pvalue|p.value|p-value|p-val|p.val", colnames(enrichment))
         index <- unlist(index)
         if(length(index) == 0) {
@@ -585,7 +585,7 @@ generateHypTabs <- function(ents, rels, evidence, verbose=TRUE,
                              value=value)
     }
     D <- intoGroups %>% 
-        summarise(
+        dplyr::summarise(
             npp = sum(val == 1 & type == 'increase', na.rm=T),
             npm = sum(val == -1 & type == 'increase', na.rm=T),
             npz = sum(val == 0 & type == 'increase', na.rm=T),
@@ -603,7 +603,7 @@ generateHypTabs <- function(ents, rels, evidence, verbose=TRUE,
                     | (val != 0 & type == 'conflict'), na.rm=T),
             incorrect.pred = 
                 sum((val == -1 & type == 'increase') | (val == 1 & type == 'decrease') , na.rm=T),
-            total.reachable = n(),
+            total.reachable = dplyr::n(),
             significant.reachable = sum(val != 0, na.rm=T),
             total.ambiguous = length(type == 'conflict'),
             significant.ambiguous = sum(val != 0 & type == 'conflict', na.rm=T),
