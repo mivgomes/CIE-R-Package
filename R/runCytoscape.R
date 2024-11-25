@@ -207,9 +207,10 @@ createCytoGraphHelper <- function(enrichment, ents, rels, DGE,
         ## edgesToJSON <- makeJSONfromDF(edgeD) 
         
         ## network <- list()
-        network <- createCytoscapeJsNetwork(nodeD, edgeD)
-        
-        rcytoscapejs(network$nodes, network$edges, showPanzoom=FALSE)
+        #network <- createCytoscapeJsNetwork(nodeD, edgeD)
+        network <- createNetworkFromDataFrames(nodeD,edgeD)
+        #rcytoscapejs(network$nodes, network$edges, showPanzoom=FALSE)
+        createCytoscapejsFromNetwork(network)
     }
 }
 makeJSONfromDF <- function(dataFrame) {
